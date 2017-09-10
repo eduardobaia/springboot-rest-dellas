@@ -8,6 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Version;
 
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
@@ -28,6 +29,29 @@ public class Product implements Serializable {
 
 	@Column(name = "VALUE_PRODUCT", nullable = false, length = 200)
 	private Double unitaryValue;
+
+	@Column(name = "AMOUNT_PRODUCT", nullable = false)
+	private Integer amount;
+
+	@Version
+	@Column(name = "VERSION_PRODUCT", nullable = false)
+	private Integer version;
+
+	public Integer getVersion() {
+		return version;
+	}
+
+	public void setVersion(final Integer version) {
+		this.version = version;
+	}
+
+	public Integer getAmount() {
+		return amount;
+	}
+
+	public void setAmount(final Integer amount) {
+		this.amount = amount;
+	}
 
 	public Long getId() {
 		return id;
@@ -55,7 +79,8 @@ public class Product implements Serializable {
 
 	@Override
 	public int hashCode() {
-		return new HashCodeBuilder().append(getDescription()).append(getUnitaryValue()).toHashCode();
+		return new HashCodeBuilder().append(getDescription()).append(getUnitaryValue()).append(getAmount())
+				.toHashCode();
 	}
 
 	@Override
@@ -69,6 +94,6 @@ public class Product implements Serializable {
 
 		final Product rhs = (Product) obj;
 		return new EqualsBuilder().append(getDescription(), rhs.getDescription())
-				.append(getUnitaryValue(), rhs.getUnitaryValue()).isEquals();
+				.append(getUnitaryValue(), rhs.getUnitaryValue()).append(getAmount(), rhs.getAmount()).isEquals();
 	}
 }

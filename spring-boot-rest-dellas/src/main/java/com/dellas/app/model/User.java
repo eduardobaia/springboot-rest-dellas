@@ -4,15 +4,20 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Version;
 
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
+import org.hibernate.annotations.Parameter;
+import org.hibernate.annotations.Type;
+
+import com.dellas.app.model.domain.ProfileEnum;
 
 @Entity
 @Table(name = "USER")
@@ -34,9 +39,31 @@ public class User implements Serializable {
 	@Column(name = "PASSWORD_USER", nullable = false, length = 100)
 	private String password;
 
-	@ManyToOne
-	@JoinColumn(name = "ID_PROFILE", referencedColumnName = "ID_PROFILE")
-	private Profile profile;
+	@Version
+	@Column(name = "VERSION_USER", nullable = false)
+	private Integer version;
+
+	@Enumerated(EnumType.STRING)
+	@Type(type = "org.hibernate.type.EnumType", parameters = {
+			@Parameter(name = "enumClass", value = "com.dellas.app.model.domain") })
+	@Column(name = "PROFILE_USER", nullable = false, length = 1)
+	private ProfileEnum profile;
+
+	public ProfileEnum getProfile() {
+		return profile;
+	}
+
+	public void setProfile(final ProfileEnum profile) {
+		this.profile = profile;
+	}
+
+	public Integer getVersion() {
+		return version;
+	}
+
+	public void setVersion(final Integer version) {
+		this.version = version;
+	}
 
 	public Long getId() {
 		return id;
@@ -68,14 +95,6 @@ public class User implements Serializable {
 
 	public void setPassword(final String password) {
 		this.password = password;
-	}
-
-	public Profile getProfile() {
-		return profile;
-	}
-
-	public void setProfile(final Profile profile) {
-		this.profile = profile;
 	}
 
 	@Override

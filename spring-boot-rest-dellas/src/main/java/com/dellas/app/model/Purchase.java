@@ -16,10 +16,11 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Version;
 
 @Entity
 @Table(name = "PURCHASE")
-public class Purchase implements Serializable{
+public class Purchase implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -38,15 +39,26 @@ public class Purchase implements Serializable{
 	@Column(name = "TOTAL_VALUE_PURCHASE", nullable = false)
 	private Double totalValue;
 
+	@Version
+	@Column(name = "VERSION_PURCHASE", nullable = false)
+	private Integer version;
+
 	@ManyToOne
 	@JoinColumn(name = "ID_USER", referencedColumnName = "ID_USER")
 	private User user;
 
 	@ManyToMany
-	@JoinTable(name = "PURCHASE_PRODUCT",
-	joinColumns = {@JoinColumn(name = "ID_PURCHASE", referencedColumnName = "ID_PURCHASE")},
-	inverseJoinColumns = @JoinColumn(name = "ID_PRODUCT", referencedColumnName = "ID_PRODUCT") )
+	@JoinTable(name = "PURCHASE_PRODUCT", joinColumns = {
+			@JoinColumn(name = "ID_PURCHASE", referencedColumnName = "ID_PURCHASE") }, inverseJoinColumns = @JoinColumn(name = "ID_PRODUCT", referencedColumnName = "ID_PRODUCT"))
 	private Set<Product> products;
+
+	public Integer getVersion() {
+		return version;
+	}
+
+	public void setVersion(final Integer version) {
+		this.version = version;
+	}
 
 	public Long getId() {
 		return id;

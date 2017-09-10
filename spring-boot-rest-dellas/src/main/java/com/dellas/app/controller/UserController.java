@@ -15,27 +15,29 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.dellas.app.converter.TaskConverter;
-import com.dellas.app.dto.TaskDTO;
-import com.dellas.app.service.TaskService;
+import com.dellas.app.dto.UserDTO;
+import com.dellas.app.service.UserService;
 import com.dellas.app.util.Error;
 import com.dellas.app.util.TaskExceptionHandler;
 
-@RequestMapping("/task")
+@RequestMapping("/user")
 @CrossOrigin
 @RestController
-public class TaskController {
+public class UserController {
 
 	@Autowired
-	private TaskService taskService;
+	private UserService userService;
+
+	// TODO implementar handle de excessões
 
 	@RequestMapping(method = RequestMethod.GET , produces=MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> findAll(@RequestParam final Map<String, String> params){
 		try {
 			if(params.isEmpty()) {
-				return new ResponseEntity<>(taskService.findAll(), HttpStatus.OK);
+				return new ResponseEntity<>(userService.findAll(), HttpStatus.OK);
 			}else {
-				return new ResponseEntity<>(taskService.findByFilter(TaskConverter.toTaskDTO(params)), HttpStatus.OK);
+				return null;
+				//return new ResponseEntity<>(userService.findByFilter(UserConverter.toDTO(params)), HttpStatus.OK);
 			}
 		} catch (final RuntimeException e) {
 			return new ResponseEntity<Error>(new Error(1, TaskExceptionHandler.getExcetionError(e)), HttpStatus.EXPECTATION_FAILED);
@@ -45,8 +47,8 @@ public class TaskController {
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET , produces=MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> findById(@PathVariable final Long id){
 		try {
-			final TaskDTO dto = taskService.findById(id);
-			return new ResponseEntity<TaskDTO>(dto, HttpStatus.OK);
+			final UserDTO dto = userService.findById(id);
+			return new ResponseEntity<UserDTO>(dto, HttpStatus.OK);
 		} catch (final RuntimeException e) {
 			return new ResponseEntity<Error>(new Error(1, TaskExceptionHandler.getExcetionError(e)), HttpStatus.EXPECTATION_FAILED);
 		}
@@ -54,10 +56,10 @@ public class TaskController {
 
 	@ResponseBody
 	@RequestMapping(value = "", method = RequestMethod.POST , consumes = MediaType.APPLICATION_JSON_VALUE, produces=MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<?> persist(@RequestBody final TaskDTO dto){
+	public ResponseEntity<?> persist(@RequestBody final UserDTO dto){
 		try {
-			final TaskDTO inserted= taskService.persist(dto);
-			return new ResponseEntity<TaskDTO>(inserted, HttpStatus.OK);
+			final UserDTO inserted= userService.persist(dto);
+			return new ResponseEntity<UserDTO>(inserted, HttpStatus.OK);
 		} catch (final RuntimeException e) {
 			return new ResponseEntity<Error>(new Error(1, TaskExceptionHandler.getExcetionError(e)), HttpStatus.EXPECTATION_FAILED);
 		}
@@ -65,10 +67,10 @@ public class TaskController {
 
 	@ResponseBody
 	@RequestMapping(value = "", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE, produces=MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<?> update(@RequestBody final TaskDTO dto){
+	public ResponseEntity<?> update(@RequestBody final UserDTO dto){
 		try {
-			final TaskDTO updated= taskService.update(dto);
-			return new ResponseEntity<TaskDTO>(updated, HttpStatus.OK);
+			final UserDTO updated= userService.update(dto);
+			return new ResponseEntity<UserDTO>(updated, HttpStatus.OK);
 		} catch (final RuntimeException e) {
 			return new ResponseEntity<Error>(new Error(1, TaskExceptionHandler.getExcetionError(e)), HttpStatus.EXPECTATION_FAILED);
 		}
@@ -76,6 +78,6 @@ public class TaskController {
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE , produces=MediaType.APPLICATION_JSON_VALUE)
 	public void delete(@PathVariable final Long id){
-		taskService.delete(id);
+		userService.delete(id);
 	}
 }
