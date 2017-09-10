@@ -13,9 +13,6 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Version;
 
-import org.apache.commons.lang.builder.EqualsBuilder;
-import org.apache.commons.lang.builder.HashCodeBuilder;
-
 @Entity
 @Table(name = "PRODUCT")
 public class Product implements Serializable {
@@ -39,11 +36,11 @@ public class Product implements Serializable {
 	@Version
 	@Column(name = "VERSION_PRODUCT", nullable = false)
 	private Integer version;
-	
+
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "DATE_EXPIRATION", nullable = false)
 	private Date expirationDate;
-	
+
 	public Integer getVersion() {
 		return version;
 	}
@@ -96,56 +93,71 @@ public class Product implements Serializable {
 		result = prime * result + ((version == null) ? 0 : version.hashCode());
 		return result;
 	}
-	
-	
+
+
 
 	public Date getExpirationDate() {
 		return expirationDate;
 	}
 
-	public void setExpirationDate(Date expirationDate) {
+	public void setExpirationDate(final Date expirationDate) {
 		this.expirationDate = expirationDate;
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
+	public boolean equals(final Object obj) {
+		if (this == obj) {
 			return true;
-		if (obj == null)
+		}
+		if (obj == null) {
 			return false;
-		if (getClass() != obj.getClass())
+		}
+		if (getClass() != obj.getClass()) {
 			return false;
-		Product other = (Product) obj;
+		}
+		final Product other = (Product) obj;
 		if (amount == null) {
-			if (other.amount != null)
+			if (other.amount != null) {
 				return false;
-		} else if (!amount.equals(other.amount))
+			}
+		} else if (!amount.equals(other.amount)) {
 			return false;
+		}
 		if (description == null) {
-			if (other.description != null)
+			if (other.description != null) {
 				return false;
-		} else if (!description.equals(other.description))
+			}
+		} else if (!description.equals(other.description)) {
 			return false;
+		}
 		if (expirationDate == null) {
-			if (other.expirationDate != null)
+			if (other.expirationDate != null) {
 				return false;
-		} else if (!expirationDate.equals(other.expirationDate))
+			}
+		} else if (!expirationDate.equals(other.expirationDate)) {
 			return false;
+		}
 		if (id == null) {
-			if (other.id != null)
+			if (other.id != null) {
 				return false;
-		} else if (!id.equals(other.id))
+			}
+		} else if (!id.equals(other.id)) {
 			return false;
+		}
 		if (unitaryValue == null) {
-			if (other.unitaryValue != null)
+			if (other.unitaryValue != null) {
 				return false;
-		} else if (!unitaryValue.equals(other.unitaryValue))
+			}
+		} else if (!unitaryValue.equals(other.unitaryValue)) {
 			return false;
+		}
 		if (version == null) {
-			if (other.version != null)
+			if (other.version != null) {
 				return false;
-		} else if (!version.equals(other.version))
+			}
+		} else if (!version.equals(other.version)) {
 			return false;
+		}
 		return true;
 	}
 
