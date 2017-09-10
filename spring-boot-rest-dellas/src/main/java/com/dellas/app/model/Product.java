@@ -1,6 +1,7 @@
 package com.dellas.app.model;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -8,6 +9,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.persistence.Version;
 
 import org.apache.commons.lang.builder.EqualsBuilder;
@@ -36,7 +39,11 @@ public class Product implements Serializable {
 	@Version
 	@Column(name = "VERSION_PRODUCT", nullable = false)
 	private Integer version;
-
+	
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "DATE_EXPIRATION", nullable = false)
+	private Date expirationDate;
+	
 	public Integer getVersion() {
 		return version;
 	}
@@ -79,21 +86,72 @@ public class Product implements Serializable {
 
 	@Override
 	public int hashCode() {
-		return new HashCodeBuilder().append(getDescription()).append(getUnitaryValue()).append(getAmount())
-				.toHashCode();
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((amount == null) ? 0 : amount.hashCode());
+		result = prime * result + ((description == null) ? 0 : description.hashCode());
+		result = prime * result + ((expirationDate == null) ? 0 : expirationDate.hashCode());
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + ((unitaryValue == null) ? 0 : unitaryValue.hashCode());
+		result = prime * result + ((version == null) ? 0 : version.hashCode());
+		return result;
+	}
+	
+	
+
+	public Date getExpirationDate() {
+		return expirationDate;
+	}
+
+	public void setExpirationDate(Date expirationDate) {
+		this.expirationDate = expirationDate;
 	}
 
 	@Override
-	public boolean equals(final Object obj) {
-		if (obj == null) {
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
 			return false;
-		}
-		if (obj.getClass() != getClass()) {
+		if (getClass() != obj.getClass())
 			return false;
-		}
+		Product other = (Product) obj;
+		if (amount == null) {
+			if (other.amount != null)
+				return false;
+		} else if (!amount.equals(other.amount))
+			return false;
+		if (description == null) {
+			if (other.description != null)
+				return false;
+		} else if (!description.equals(other.description))
+			return false;
+		if (expirationDate == null) {
+			if (other.expirationDate != null)
+				return false;
+		} else if (!expirationDate.equals(other.expirationDate))
+			return false;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
+		if (unitaryValue == null) {
+			if (other.unitaryValue != null)
+				return false;
+		} else if (!unitaryValue.equals(other.unitaryValue))
+			return false;
+		if (version == null) {
+			if (other.version != null)
+				return false;
+		} else if (!version.equals(other.version))
+			return false;
+		return true;
+	}
 
-		final Product rhs = (Product) obj;
-		return new EqualsBuilder().append(getDescription(), rhs.getDescription())
-				.append(getUnitaryValue(), rhs.getUnitaryValue()).append(getAmount(), rhs.getAmount()).isEquals();
+	@Override
+	public String toString() {
+		return "Product [id=" + id + ", description=" + description + ", unitaryValue=" + unitaryValue + ", amount="
+				+ amount + ", version=" + version + ", expirationDate=" + expirationDate + "]";
 	}
 }
