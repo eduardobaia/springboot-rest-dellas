@@ -47,8 +47,8 @@ public class User implements Serializable {
 
 	@Enumerated(EnumType.STRING)
 	@Type(type = "org.hibernate.type.EnumType", parameters = {
-			@Parameter(name = "enumClass", value = "com.dellas.app.model.domain") })
-	@Column(name = "PROFILE_USER", nullable = false, length = 1)
+			@Parameter(name = "enumClass", value = "com.dellas.app.model.domain.ProfileEnum") })
+	@Column(name = "ID_PROFILE_USER", nullable = false)
 	private ProfileEnum profile;
 
 	public ProfileEnum getProfile() {
