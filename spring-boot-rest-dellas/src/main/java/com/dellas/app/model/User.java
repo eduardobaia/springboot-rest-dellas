@@ -25,6 +25,8 @@ public class User implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
+	// TODO testar o insert com o enum
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "ID_USER", precision = 12, scale = 0)
