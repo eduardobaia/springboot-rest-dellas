@@ -3,9 +3,8 @@ package com.dellas.app.model;
 import java.io.Serializable;
 
 import javax.persistence.Column;
+import javax.persistence.Convert;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -14,10 +13,9 @@ import javax.persistence.Version;
 
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
-import org.hibernate.annotations.Parameter;
-import org.hibernate.annotations.Type;
 
 import com.dellas.app.model.domain.ProfileEnum;
+import com.dellas.app.support.ProfileEnumConverter;
 
 @Entity
 @Table(name = "USER")
@@ -45,10 +43,8 @@ public class User implements Serializable {
 	@Column(name = "VERSION_USER", nullable = false)
 	private Integer version;
 
-	@Enumerated(EnumType.STRING)
-	@Type(type = "org.hibernate.type.EnumType", parameters = {
-			@Parameter(name = "enumClass", value = "com.dellas.app.model.domain.ProfileEnum") })
-	@Column(name = "ID_PROFILE_USER", nullable = false)
+	@Convert(converter = ProfileEnumConverter.class)
+	@Column(name = "ID_PROFILE_USER", nullable = false, length = 1)
 	private ProfileEnum profile;
 
 	public ProfileEnum getProfile() {
