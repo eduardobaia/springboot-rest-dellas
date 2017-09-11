@@ -4,6 +4,6 @@ import org.springframework.data.repository.CrudRepository;
 
 import com.dellas.app.model.User;
 
-public interface UserRepository extends CrudRepository<User, Long>{
+public interface UserRepository extends CrudRepository<User, Long>, UserRepositoryCustom{
 
 }

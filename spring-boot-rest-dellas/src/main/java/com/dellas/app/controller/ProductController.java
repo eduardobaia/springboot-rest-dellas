@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.dellas.app.dto.ProductDTO;
 import com.dellas.app.service.ProductService;
 import com.dellas.app.util.Error;
-import com.dellas.app.util.TaskExceptionHandler;
+import com.dellas.app.util.UserExceptionHandler;
 
 @RequestMapping("/product")
 @CrossOrigin
@@ -40,7 +40,7 @@ public class ProductController {
 				//return new ResponseEntity<>(productService.findByFilter(UserConverter.toDTO(params)), HttpStatus.OK);
 			}
 		} catch (final RuntimeException e) {
-			return new ResponseEntity<Error>(new Error(1, TaskExceptionHandler.getExcetionError(e)), HttpStatus.EXPECTATION_FAILED);
+			return new ResponseEntity<Error>(new Error(1, UserExceptionHandler.getExcetionError(e)), HttpStatus.EXPECTATION_FAILED);
 		}
 	}
 
@@ -50,7 +50,7 @@ public class ProductController {
 			final ProductDTO dto = productService.findById(id);
 			return new ResponseEntity<ProductDTO>(dto, HttpStatus.OK);
 		} catch (final RuntimeException e) {
-			return new ResponseEntity<Error>(new Error(1, TaskExceptionHandler.getExcetionError(e)), HttpStatus.EXPECTATION_FAILED);
+			return new ResponseEntity<Error>(new Error(1, UserExceptionHandler.getExcetionError(e)), HttpStatus.EXPECTATION_FAILED);
 		}
 	}
 
@@ -61,7 +61,7 @@ public class ProductController {
 			final ProductDTO inserted= productService.persist(dto);
 			return new ResponseEntity<ProductDTO>(inserted, HttpStatus.OK);
 		} catch (final RuntimeException e) {
-			return new ResponseEntity<Error>(new Error(1, TaskExceptionHandler.getExcetionError(e)), HttpStatus.EXPECTATION_FAILED);
+			return new ResponseEntity<Error>(new Error(1, UserExceptionHandler.getExcetionError(e)), HttpStatus.EXPECTATION_FAILED);
 		}
 	}
 
@@ -72,7 +72,7 @@ public class ProductController {
 			final ProductDTO updated= productService.update(dto);
 			return new ResponseEntity<ProductDTO>(updated, HttpStatus.OK);
 		} catch (final RuntimeException e) {
-			return new ResponseEntity<Error>(new Error(1, TaskExceptionHandler.getExcetionError(e)), HttpStatus.EXPECTATION_FAILED);
+			return new ResponseEntity<Error>(new Error(1, UserExceptionHandler.getExcetionError(e)), HttpStatus.EXPECTATION_FAILED);
 		}
 	}
 

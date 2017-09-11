@@ -21,8 +21,8 @@ public class UserServiceImpl implements UserService {
 	//TODO implementar regras de negocio
 
 	@Override
-	public List<UserDTO> findByFilter(final UserDTO sserDTO) {
-		return null; // TODO implementar busca por filtro com criteria
+	public List<UserDTO> findByFilter(final UserDTO userDTO) {
+		return UserConverter.toListDTO(userRepository.findByFilter(UserConverter.toModel(userDTO)));
 	}
 
 	@Override

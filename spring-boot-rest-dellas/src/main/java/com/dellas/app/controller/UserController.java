@@ -15,10 +15,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.dellas.app.converter.UserConverter;
 import com.dellas.app.dto.UserDTO;
 import com.dellas.app.service.UserService;
 import com.dellas.app.util.Error;
-import com.dellas.app.util.TaskExceptionHandler;
+import com.dellas.app.util.UserExceptionHandler;
 
 @RequestMapping("/user")
 @CrossOrigin
@@ -28,19 +29,16 @@ public class UserController {
 	@Autowired
 	private UserService userService;
 
-	// TODO implementar handle de excessões
-
 	@RequestMapping(method = RequestMethod.GET , produces=MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> findAll(@RequestParam final Map<String, String> params){
 		try {
 			if(params.isEmpty()) {
 				return new ResponseEntity<>(userService.findAll(), HttpStatus.OK);
 			}else {
-				return null;
-				//return new ResponseEntity<>(userService.findByFilter(UserConverter.toDTO(params)), HttpStatus.OK);
+				return new ResponseEntity<>(userService.findByFilter(UserConverter.toDTO(params)), HttpStatus.OK);
 			}
 		} catch (final RuntimeException e) {
-			return new ResponseEntity<Error>(new Error(1, TaskExceptionHandler.getExcetionError(e)), HttpStatus.EXPECTATION_FAILED);
+			return new ResponseEntity<Error>(new Error(1, UserExceptionHandler.getExcetionError(e)), HttpStatus.EXPECTATION_FAILED);
 		}
 	}
 
@@ -50,7 +48,7 @@ public class UserController {
 			final UserDTO dto = userService.findById(id);
 			return new ResponseEntity<UserDTO>(dto, HttpStatus.OK);
 		} catch (final RuntimeException e) {
-			return new ResponseEntity<Error>(new Error(1, TaskExceptionHandler.getExcetionError(e)), HttpStatus.EXPECTATION_FAILED);
+			return new ResponseEntity<Error>(new Error(1, UserExceptionHandler.getExcetionError(e)), HttpStatus.EXPECTATION_FAILED);
 		}
 	}
 
@@ -61,7 +59,7 @@ public class UserController {
 			final UserDTO inserted= userService.persist(dto);
 			return new ResponseEntity<UserDTO>(inserted, HttpStatus.OK);
 		} catch (final RuntimeException e) {
-			return new ResponseEntity<Error>(new Error(1, TaskExceptionHandler.getExcetionError(e)), HttpStatus.EXPECTATION_FAILED);
+			return new ResponseEntity<Error>(new Error(1, UserExceptionHandler.getExcetionError(e)), HttpStatus.EXPECTATION_FAILED);
 		}
 	}
 
@@ -72,7 +70,7 @@ public class UserController {
 			final UserDTO updated= userService.update(dto);
 			return new ResponseEntity<UserDTO>(updated, HttpStatus.OK);
 		} catch (final RuntimeException e) {
-			return new ResponseEntity<Error>(new Error(1, TaskExceptionHandler.getExcetionError(e)), HttpStatus.EXPECTATION_FAILED);
+			return new ResponseEntity<Error>(new Error(1, UserExceptionHandler.getExcetionError(e)), HttpStatus.EXPECTATION_FAILED);
 		}
 	}
 

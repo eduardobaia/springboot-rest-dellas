@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.dellas.app.dto.PurchaseDTO;
 import com.dellas.app.service.PurchaseService;
 import com.dellas.app.util.Error;
-import com.dellas.app.util.TaskExceptionHandler;
+import com.dellas.app.util.UserExceptionHandler;
 
 @RequestMapping("/purchase")
 @CrossOrigin
@@ -40,7 +40,7 @@ public class PurchaseController {
 				//return new ResponseEntity<>(purchaseService.findByFilter(UserConverter.toDTO(params)), HttpStatus.OK);
 			}
 		} catch (final RuntimeException e) {
-			return new ResponseEntity<Error>(new Error(1, TaskExceptionHandler.getExcetionError(e)), HttpStatus.EXPECTATION_FAILED);
+			return new ResponseEntity<Error>(new Error(1, UserExceptionHandler.getExcetionError(e)), HttpStatus.EXPECTATION_FAILED);
 		}
 	}
 
@@ -50,7 +50,7 @@ public class PurchaseController {
 			final PurchaseDTO dto = purchaseService.findById(id);
 			return new ResponseEntity<PurchaseDTO>(dto, HttpStatus.OK);
 		} catch (final RuntimeException e) {
-			return new ResponseEntity<Error>(new Error(1, TaskExceptionHandler.getExcetionError(e)), HttpStatus.EXPECTATION_FAILED);
+			return new ResponseEntity<Error>(new Error(1, UserExceptionHandler.getExcetionError(e)), HttpStatus.EXPECTATION_FAILED);
 		}
 	}
 
@@ -61,7 +61,7 @@ public class PurchaseController {
 			final PurchaseDTO inserted= purchaseService.persist(dto);
 			return new ResponseEntity<PurchaseDTO>(inserted, HttpStatus.OK);
 		} catch (final RuntimeException e) {
-			return new ResponseEntity<Error>(new Error(1, TaskExceptionHandler.getExcetionError(e)), HttpStatus.EXPECTATION_FAILED);
+			return new ResponseEntity<Error>(new Error(1, UserExceptionHandler.getExcetionError(e)), HttpStatus.EXPECTATION_FAILED);
 		}
 	}
 
@@ -72,7 +72,7 @@ public class PurchaseController {
 			final PurchaseDTO updated= purchaseService.update(dto);
 			return new ResponseEntity<PurchaseDTO>(updated, HttpStatus.OK);
 		} catch (final RuntimeException e) {
-			return new ResponseEntity<Error>(new Error(1, TaskExceptionHandler.getExcetionError(e)), HttpStatus.EXPECTATION_FAILED);
+			return new ResponseEntity<Error>(new Error(1, UserExceptionHandler.getExcetionError(e)), HttpStatus.EXPECTATION_FAILED);
 		}
 	}
 
