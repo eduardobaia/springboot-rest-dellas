@@ -1,4 +1,4 @@
-package com.dellas.app.service.impl;
+package com.dellas.app.service;
 
 import java.util.List;
 
@@ -10,7 +10,6 @@ import com.dellas.app.converter.ProductConverter;
 import com.dellas.app.dto.ProductDTO;
 import com.dellas.app.model.Product;
 import com.dellas.app.repository.ProductRepository;
-import com.dellas.app.service.ProductService;
 
 @Transactional(readOnly = true)
 @Service
