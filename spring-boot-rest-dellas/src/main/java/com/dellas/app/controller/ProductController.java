@@ -16,9 +16,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.dellas.app.dto.ProductDTO;
+import com.dellas.app.exception.Error;
+import com.dellas.app.exception.UserExceptionHandler;
 import com.dellas.app.service.ProductService;
-import com.dellas.app.util.Error;
-import com.dellas.app.util.UserExceptionHandler;
 
 @RequestMapping("/product")
 @CrossOrigin

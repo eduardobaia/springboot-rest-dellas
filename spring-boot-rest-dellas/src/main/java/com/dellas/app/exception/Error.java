@@ -1,4 +1,4 @@
-package com.dellas.app.util;
+package com.dellas.app.exception;
 
 import java.io.Serializable;
 import java.util.List;

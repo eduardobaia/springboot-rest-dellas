@@ -1,10 +1,7 @@
-package com.dellas.app.util;
+package com.dellas.app.exception;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import com.dellas.app.exception.MultipleUserException;
-import com.dellas.app.exception.UserException;
 
 
 public class UserExceptionHandler {
