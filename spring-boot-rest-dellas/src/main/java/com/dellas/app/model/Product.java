@@ -9,8 +9,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.persistence.Version;
 
 @Entity
@@ -37,7 +35,6 @@ public class Product implements Serializable {
 	@Column(name = "VERSION_PRODUCT", nullable = false)
 	private Integer version;
 
-	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "DATE_EXPIRATION", nullable = false)
 	private Date expirationDate;
 

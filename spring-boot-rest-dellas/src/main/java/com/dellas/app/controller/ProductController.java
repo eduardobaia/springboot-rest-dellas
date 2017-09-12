@@ -1,5 +1,6 @@
 package com.dellas.app.controller;
 
+import java.text.ParseException;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.dellas.app.converter.ProductConverter;
 import com.dellas.app.dto.ProductDTO;
 import com.dellas.app.exception.Error;
 import com.dellas.app.exception.UserExceptionHandler;
@@ -28,16 +30,13 @@ public class ProductController {
 	@Autowired
 	private ProductService productService;
 
-	// TODO implementar handle de excessões
-
 	@RequestMapping(method = RequestMethod.GET , produces=MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<?> findAll(@RequestParam final Map<String, String> params){
+	public ResponseEntity<?> findAll(@RequestParam final Map<String, String> params) throws ParseException{
 		try {
 			if(params.isEmpty()) {
 				return new ResponseEntity<>(productService.findAll(), HttpStatus.OK);
 			}else {
-				return null;
-				//return new ResponseEntity<>(productService.findByFilter(UserConverter.toDTO(params)), HttpStatus.OK);
+				return new ResponseEntity<>(productService.findByFilter(ProductConverter.toDTO(params)), HttpStatus.OK);
 			}
 		} catch (final RuntimeException e) {
 			return new ResponseEntity<Error>(new Error(1, UserExceptionHandler.getExcetionError(e)), HttpStatus.EXPECTATION_FAILED);

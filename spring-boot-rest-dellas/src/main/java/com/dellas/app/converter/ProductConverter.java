@@ -1,7 +1,11 @@
 package com.dellas.app.converter;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import com.dellas.app.dto.ProductDTO;
 import com.dellas.app.model.Product;
@@ -14,6 +18,7 @@ public class ProductConverter {
 		product.setAmount(productDTO.getAmount());
 		product.setDescription(productDTO.getDescription());
 		product.setUnitaryValue(productDTO.getUnitaryValue());
+		product.setExpirationDate(productDTO.getExpirationDate());
 		product.setVersion(productDTO.getVersion());
 		return product;
 	}
@@ -24,6 +29,7 @@ public class ProductConverter {
 		productDTO.setAmount(product.getAmount());
 		productDTO.setDescription(product.getDescription());
 		productDTO.setUnitaryValue(product.getUnitaryValue());
+		productDTO.setExpirationDate(product.getExpirationDate());
 		productDTO.setVersion(product.getVersion());
 		return productDTO;
 	}
@@ -34,5 +40,25 @@ public class ProductConverter {
 			results.add(toDTO(product));
 		}
 		return results;
+	}
+
+	public static ProductDTO toDTO(final Map<String, String> params) throws ParseException {
+		final ProductDTO retorno = new ProductDTO();
+		for (final Map.Entry<String, String> entry : params.entrySet()) {
+			if (entry.getKey().equalsIgnoreCase("description")) {
+				retorno.setDescription(entry.getValue());
+			}
+			if (entry.getKey().equalsIgnoreCase("unitaryValue")) {
+				retorno.setUnitaryValue(Double.valueOf(entry.getValue()));
+			}
+			if (entry.getKey().equalsIgnoreCase("amount")) {
+				retorno.setAmount(Integer.valueOf(entry.getValue()));
+			}
+			if (entry.getKey().equalsIgnoreCase("expirationDate")) {
+				final Date dateConverted= new SimpleDateFormat("dd/MM/yyyy").parse(entry.getValue());
+				retorno.setExpirationDate(dateConverted);
+			}
+		}
+		return retorno;
 	}
 }

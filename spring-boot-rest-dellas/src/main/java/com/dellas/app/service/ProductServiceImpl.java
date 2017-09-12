@@ -22,7 +22,7 @@ public class ProductServiceImpl implements ProductService{
 
 	@Override
 	public List<ProductDTO> findByFilter(final ProductDTO productDTO) {
-		return null; // TODO implementar busca por filtro com criteria
+		return ProductConverter.toListDTO(productRepository.findByFilter(ProductConverter.toModel(productDTO)));
 	}
 
 	@Override
@@ -35,16 +35,19 @@ public class ProductServiceImpl implements ProductService{
 		return ProductConverter.toDTO(productRepository.findOne(id));
 	}
 
+	@Transactional(readOnly = false)
 	@Override
 	public ProductDTO update(final ProductDTO productDTO) {
 		return ProductConverter.toDTO(productRepository.save(ProductConverter.toModel(productDTO)));
 	}
 
+	@Transactional(readOnly = false)
 	@Override
 	public void delete(final Long id) {
 		productRepository.delete(id);
 	}
 
+	@Transactional(readOnly = false)
 	@Override
 	public ProductDTO persist(final ProductDTO productDTO) {
 		return ProductConverter.toDTO(productRepository.save(ProductConverter.toModel(productDTO)));
