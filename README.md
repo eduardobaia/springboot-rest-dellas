@@ -16,7 +16,14 @@ Endpoints
 * http://localhost:9090/user (POST) insert. json= {"name":"name", "profile":"A", "login":"login", "password":"password"}
 * http://localhost:9090/user (PUT) update. json= {"id":"1", "name":"name", "profile":"E", "login":"login", "password":"x", "version":"0"}
 * http://localhost:9090/user/{id} (DELETE) delete by id
- 
+
+* http://localhost:9090/product/{id} (GET) get by id
+* http://localhost:9090/product (GET) get all
+* http://localhost:9090/product/?expirationDate=12/09/2017&description=produto&unitaryValue=11.50&amount=200 (GET) find by filter
+* http://localhost:9090/product (POST) insert. json=  {"description":"product", "unitaryValue":"3.5", "amount":"20", "expirationDate":"15/03/2017"}
+* http://localhost:9090/product (PUT) update. json= {"id":"1", "description":"product updated", "unitaryValue":"11.5", "amount":"200", "expirationDate":"12/09/2017", "version":"0"}
+* http://localhost:9090/product/{id} (DELETE) delete by id
+
 
 #### TODO
 * update database properties in application.properties (main and test)
