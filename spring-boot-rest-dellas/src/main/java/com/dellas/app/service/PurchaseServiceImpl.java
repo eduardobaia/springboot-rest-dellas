@@ -1,6 +1,8 @@
 package com.dellas.app.service;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -8,7 +10,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.dellas.app.converter.PurchaseConverter;
 import com.dellas.app.dto.PurchaseDTO;
+import com.dellas.app.model.Product;
 import com.dellas.app.model.Purchase;
+import com.dellas.app.repository.ProductRepository;
 import com.dellas.app.repository.PurchaseRepository;
 
 @Transactional(readOnly = true)
@@ -17,6 +21,9 @@ public class PurchaseServiceImpl implements PurchaseService {
 
 	@Autowired
 	private PurchaseRepository purchaseRepository;
+
+	@Autowired
+	private ProductRepository productRepository;
 
 	// implementar regras de negocio
 
@@ -38,7 +45,9 @@ public class PurchaseServiceImpl implements PurchaseService {
 	@Transactional(readOnly = false)
 	@Override
 	public PurchaseDTO update(final PurchaseDTO purchaseDTO) {
-		return PurchaseConverter.toDTO(purchaseRepository.save(PurchaseConverter.toModel(purchaseDTO)));
+		final Purchase purchaseConverted= PurchaseConverter.toModel(purchaseDTO);
+		purchaseConverted.setTotalValue(calculetedTotalValueWithDiscount(purchaseConverted));
+		return PurchaseConverter.toDTO(purchaseRepository.save(purchaseConverted));
 	}
 
 	@Transactional(readOnly = false)
@@ -50,6 +59,25 @@ public class PurchaseServiceImpl implements PurchaseService {
 	@Transactional(readOnly = false)
 	@Override
 	public PurchaseDTO persist(final PurchaseDTO purchaseDTO) {
-		return PurchaseConverter.toDTO(purchaseRepository.save(PurchaseConverter.toModel(purchaseDTO)));
+		final Purchase purchaseConverted= PurchaseConverter.toModel(purchaseDTO);
+		purchaseConverted.setTotalValue(calculetedTotalValueWithDiscount(purchaseConverted));
+		return PurchaseConverter.toDTO(purchaseRepository.save(purchaseConverted));
+	}
+
+	public Double calculetedTotalValueWithDiscount(final Purchase purchase) {
+		Double totalValue = 0.0;
+		final List<Product> listProduct=(List<Product>) productRepository.findAll(getListIdsProducts(purchase.getProducts()));
+		for (final Product product : listProduct) {
+			totalValue = totalValue + product.getUnitaryValue();
+		}
+		return totalValue - purchase.getDiscount();
+	}
+
+	public List<Long> getListIdsProducts(final Set<Product> products){
+		final List<Long> results= new ArrayList<>();
+		for (final Product product : products) {
+			results.add(product.getId());
+		}
+		return results;
 	}
 }

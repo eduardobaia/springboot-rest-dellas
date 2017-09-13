@@ -4,8 +4,10 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import com.dellas.app.dto.ProductDTO;
 import com.dellas.app.model.Product;
@@ -34,10 +36,18 @@ public class ProductConverter {
 		return productDTO;
 	}
 
-	public static List<ProductDTO> toListDTO(final List<Product> list) {
+	public static List<ProductDTO> toListDTO(final Set<Product> list) {
 		final List<ProductDTO> results = new ArrayList<>();
 		for (final Product product : list) {
 			results.add(toDTO(product));
+		}
+		return results;
+	}
+
+	public static Set<Product> toListModel(final List<ProductDTO> list) {
+		final Set<Product> results = new HashSet<>();
+		for (final ProductDTO product : list) {
+			results.add(toModel(product));
 		}
 		return results;
 	}

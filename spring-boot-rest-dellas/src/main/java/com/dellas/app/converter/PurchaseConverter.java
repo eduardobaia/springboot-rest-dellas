@@ -13,9 +13,9 @@ public class PurchaseConverter {
 		purchase.setId(purchaseDTO.getId());
 		purchase.setDatePurchase(purchaseDTO.getDatePurchase());
 		purchase.setDiscount(purchaseDTO.getDiscount());
-		//purchase.setProducts(userDTO.getPassword());
+		purchase.setProducts(ProductConverter.toListModel(purchaseDTO.getProducts()));
 		purchase.setTotalValue(purchaseDTO.getTotalValue());
-		//purchase.setUser(user);
+		purchase.setUser(UserConverter.toModel(purchaseDTO.getUser()));
 		purchase.setVersion(purchaseDTO.getVersion());
 		return purchase;
 	}
@@ -25,9 +25,9 @@ public class PurchaseConverter {
 		purchaseDTO.setId(purchase.getId());
 		purchaseDTO.setDatePurchase(purchase.getDatePurchase());
 		purchaseDTO.setDiscount(purchase.getDiscount());
-		//purchaseDTO.setProducts(products);
+		purchaseDTO.setProducts(ProductConverter.toListDTO(purchase.getProducts()));
 		purchaseDTO.setTotalValue(purchase.getTotalValue());
-		//purchaseDTO.setUser();
+		purchaseDTO.setUser(UserConverter.toDTO(purchase.getUser()));
 		purchaseDTO.setVersion(purchase.getVersion());
 		return purchaseDTO;
 	}

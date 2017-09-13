@@ -1,6 +1,6 @@
 package com.dellas.app.repository;
 
-import java.util.List;
+import java.util.Set;
 
 import org.apache.commons.lang.StringUtils;
 import org.hibernate.Criteria;
@@ -13,7 +13,7 @@ public class ProductRepositoryImpl extends AbstractRepository implements Product
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Product> findByFilter(final Product product) {
+	public Set<Product> findByFilter(final Product product) {
 		final Criteria criteria = createCriteria(Product.class);
 
 		if (StringUtils.isNotBlank(product.getDescription())) {
@@ -28,7 +28,7 @@ public class ProductRepositoryImpl extends AbstractRepository implements Product
 		if (product.getExpirationDate() != null) {
 			criteria.add(Restrictions.eq("expirationDate", product.getExpirationDate()));
 		}
-		return criteria.list();
+		return (Set<Product>) criteria.list();
 	}
 
 }
