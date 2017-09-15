@@ -7,7 +7,7 @@ import org.hibernate.criterion.Restrictions;
 
 import com.dellas.app.model.Purchase;
 
-public class PurchaseRepositoryCustomImpl extends AbstractRepository implements PurchaseRepositoryCustom{
+public class PurchaseRepositoryImpl extends AbstractRepository implements PurchaseRepositoryCustom{
 
 	@SuppressWarnings("unchecked")
 	@Override

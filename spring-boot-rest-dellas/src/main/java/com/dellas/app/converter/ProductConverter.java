@@ -17,7 +17,6 @@ public class ProductConverter {
 	public static Product toModel(final ProductDTO productDTO) {
 		final Product product = new Product();
 		product.setId(productDTO.getId());
-		product.setAmount(productDTO.getAmount());
 		product.setDescription(productDTO.getDescription());
 		product.setUnitaryValue(productDTO.getUnitaryValue());
 		product.setExpirationDate(productDTO.getExpirationDate());
@@ -28,7 +27,6 @@ public class ProductConverter {
 	public static ProductDTO toDTO(final Product product) {
 		final ProductDTO productDTO = new ProductDTO();
 		productDTO.setId(product.getId());
-		productDTO.setAmount(product.getAmount());
 		productDTO.setDescription(product.getDescription());
 		productDTO.setUnitaryValue(product.getUnitaryValue());
 		productDTO.setExpirationDate(product.getExpirationDate());
@@ -60,9 +58,6 @@ public class ProductConverter {
 			}
 			if (entry.getKey().equalsIgnoreCase("unitaryValue")) {
 				retorno.setUnitaryValue(Double.valueOf(entry.getValue()));
-			}
-			if (entry.getKey().equalsIgnoreCase("amount")) {
-				retorno.setAmount(Integer.valueOf(entry.getValue()));
 			}
 			if (entry.getKey().equalsIgnoreCase("expirationDate")) {
 				final Date dateConverted= new SimpleDateFormat("dd/MM/yyyy").parse(entry.getValue());

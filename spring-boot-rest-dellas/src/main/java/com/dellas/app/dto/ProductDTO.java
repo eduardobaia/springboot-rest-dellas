@@ -11,7 +11,6 @@ public class ProductDTO extends AbstractDTO {
 
 	private String description;
 	private Double unitaryValue;
-	private Integer amount;
 	@JsonSerialize(using = CustomDateSerializer.class)
 	@JsonDeserialize(using = CustomDateDeserializer.class)
 	private Date expirationDate;
@@ -38,13 +37,5 @@ public class ProductDTO extends AbstractDTO {
 
 	public void setUnitaryValue(final Double unitaryValue) {
 		this.unitaryValue = unitaryValue;
-	}
-
-	public Integer getAmount() {
-		return amount;
-	}
-
-	public void setAmount(final Integer amount) {
-		this.amount = amount;
 	}
 }
