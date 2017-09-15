@@ -17,14 +17,14 @@ Endpoints User
 * http://localhost:9090/user (PUT) update. json= {"id":"1", "name":"name", "profile":"E", "login":"login", "password":"x", "version":"0"}
 * http://localhost:9090/user/{id} (DELETE) delete by id
 
-Endpoints Product
+Endpoints StockProduct
 
-* http://localhost:9090/product/{id} (GET) get by id
-* http://localhost:9090/product (GET) get all
-* http://localhost:9090/product/?expirationDate=12/09/2017&description=produto&unitaryValue=11.50&amount=200 (GET) find by filter
-* http://localhost:9090/product (POST) insert. json=  {"description":"product", "unitaryValue":"3.5", "amount":"20", "expirationDate":"15/03/2017"}
-* http://localhost:9090/product (PUT) update. json= {"id":"1", "description":"product updated", "unitaryValue":"11.5", "amount":"200", "expirationDate":"12/09/2017", "version":"0"}
-* http://localhost:9090/product/{id} (DELETE) delete by id
+* http://localhost:9090/stockProduct/{id} (GET) get by id
+* http://localhost:9090/stockProduct (GET) get all
+* http://localhost:9090/stockProduct/?expirationDate=12/09/2017&description=produto&unitaryValue=11.50&amount=200 (GET) find by filter
+* http://localhost:9090/stockProduct (POST) insert. json=  {"amount":"20", "statusIndicator":"A", "productDTO":{"description":"product test", "unitaryValue":"3.5", "expirationDate":"15/03/2017"}}
+* http://localhost:9090/stockProduct (PUT) update. json= {"id":"5", "version":"0", "amount":"30", "statusIndicator":"I", "productDTO": {"id":"5", "version":"0", "description":"product updated", "unitaryValue":"55.5", "expirationDate":"14/09/2017"}}
+* http://localhost:9090/stockProduct/{id} (DELETE) delete by id
 
 Endpoints Purchase
 * http://localhost:9090/purchase/{id} (GET) get by id
