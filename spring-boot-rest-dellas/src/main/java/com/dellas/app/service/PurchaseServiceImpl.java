@@ -52,6 +52,7 @@ public class PurchaseServiceImpl implements PurchaseService {
 	public PurchaseDTO update(final PurchaseDTO purchaseDTO) {
 		final Purchase purchaseConverted = PurchaseConverter.toModel(purchaseDTO);
 		purchaseConverted.setTotalValue(calculetedTotalValueWithDiscount(purchaseConverted));
+		updateStockProduct(purchaseConverted);
 		final Purchase purchaseInserted = purchaseRepository.save(purchaseConverted);
 		purchaseProductAmountRepository.save(
 				PurchaseProductAmountConverter.toListModel(purchaseInserted.getId(), purchaseInserted.getProducts()));
@@ -63,6 +64,7 @@ public class PurchaseServiceImpl implements PurchaseService {
 	public PurchaseDTO persist(final PurchaseDTO purchaseDTO) {
 		final Purchase purchaseConverted = PurchaseConverter.toModel(purchaseDTO);
 		purchaseConverted.setTotalValue(calculetedTotalValueWithDiscount(purchaseConverted));
+		updateStockProduct(purchaseConverted);
 		final Purchase purchaseInserted = purchaseRepository.save(purchaseConverted);
 		purchaseProductAmountRepository.save(
 				PurchaseProductAmountConverter.toListModel(purchaseInserted.getId(), purchaseInserted.getProducts()));
@@ -75,10 +77,17 @@ public class PurchaseServiceImpl implements PurchaseService {
 		purchaseRepository.delete(id);
 	}
 
+	public void updateStockProduct(final Purchase purchase) {
+		for (final Product product : purchase.getProducts()) {
+			final Integer updatedAmout= product.getStockProduct().getAmount() - product.getQuantityProductInPurchase();
+			product.getStockProduct().setAmount(updatedAmout);
+		}
+		productRepository.save(purchase.getProducts());
+	}
+
 	public Double calculetedTotalValueWithDiscount(final Purchase purchase) {
 		Double totalValue = 0.0;
-		final List<Product> listProduct = (List<Product>) productRepository
-				.findAll(getListIdsProducts(purchase.getProducts()));
+		final List<Product> listProduct = productRepository.findAll(getListIdsProducts(purchase.getProducts()));
 		for (final Product product : listProduct) {
 			totalValue = totalValue + (product.getUnitaryValue() * product.getQuantityProductInPurchase());
 		}
