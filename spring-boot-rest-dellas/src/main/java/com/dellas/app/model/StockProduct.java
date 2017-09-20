@@ -8,8 +8,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Version;
 
@@ -37,10 +35,6 @@ public class StockProduct implements Serializable {
 	@Column(name = "STATUS_STOCK_PRODUCT", nullable = false, length = 1)
 	private SituationObjectEnum statusIndicator;
 
-	@ManyToOne
-	@JoinColumn(name = "ID_PRODUCT", referencedColumnName = "ID_PRODUCT")
-	private Product product;
-
 	@Version
 	@Column(name = "VERSION_STOCK_PRODUCT", nullable = false)
 	private Integer version;
@@ -61,14 +55,6 @@ public class StockProduct implements Serializable {
 		this.id = id;
 	}
 
-	public Product getProduct() {
-		return product;
-	}
-
-	public void setProduct(final Product product) {
-		this.product = product;
-	}
-
 	public Integer getAmount() {
 		return amount;
 	}
@@ -87,8 +73,7 @@ public class StockProduct implements Serializable {
 
 	@Override
 	public int hashCode() {
-		return new HashCodeBuilder().append(getProduct()).append(getAmount()).append(getVersion())
-				.append(getStatusIndicator()).toHashCode();
+		return new HashCodeBuilder().append(getAmount()).append(getVersion()).append(getStatusIndicator()).toHashCode();
 	}
 
 	@Override
@@ -101,8 +86,7 @@ public class StockProduct implements Serializable {
 		}
 
 		final StockProduct rhs = (StockProduct) obj;
-		return new EqualsBuilder().append(getProduct(), rhs.getProduct()).append(getAmount(), rhs.getAmount())
-				.append(getVersion(), rhs.getVersion()).append(getStatusIndicator(), rhs.getStatusIndicator())
-				.isEquals();
+		return new EqualsBuilder().append(getAmount(), rhs.getAmount()).append(getVersion(), rhs.getVersion())
+				.append(getStatusIndicator(), rhs.getStatusIndicator()).isEquals();
 	}
 }

@@ -1,6 +1,7 @@
 package com.dellas.app.converter;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import com.dellas.app.dto.PurchaseDTO;
@@ -11,9 +12,9 @@ public class PurchaseConverter {
 	public static Purchase toModel(final PurchaseDTO purchaseDTO) {
 		final Purchase purchase = new Purchase();
 		purchase.setId(purchaseDTO.getId());
-		purchase.setDatePurchase(purchaseDTO.getDatePurchase());
+		purchase.setDatePurchase(new Date());
 		purchase.setDiscount(purchaseDTO.getDiscount());
-		purchase.setProducts(ProductConverter.toListModel(purchaseDTO.getProducts()));
+		//purchase.setProducts(ProductConverter.stockProductToListProduct(purchaseDTO.getStockProductDTOs()));
 		purchase.setTotalValue(purchaseDTO.getTotalValue());
 		purchase.setUser(UserConverter.toModel(purchaseDTO.getUser()));
 		purchase.setVersion(purchaseDTO.getVersion());
@@ -25,7 +26,7 @@ public class PurchaseConverter {
 		purchaseDTO.setId(purchase.getId());
 		purchaseDTO.setDatePurchase(purchase.getDatePurchase());
 		purchaseDTO.setDiscount(purchase.getDiscount());
-		purchaseDTO.setProducts(ProductConverter.toListDTO(purchase.getProducts()));
+		//purchaseDTO.setProducts(ProductConverter.toListDTO(purchase.getProducts()));
 		purchaseDTO.setTotalValue(purchase.getTotalValue());
 		purchaseDTO.setUser(UserConverter.toDTO(purchase.getUser()));
 		purchaseDTO.setVersion(purchase.getVersion());

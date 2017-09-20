@@ -2,7 +2,6 @@ package com.dellas.app.model;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -11,8 +10,10 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.persistence.Version;
 
 import org.apache.commons.lang.builder.EqualsBuilder;
@@ -35,15 +36,35 @@ public class Product implements Serializable {
 	@Column(name = "VALUE_PRODUCT", nullable = false, length = 200)
 	private Double unitaryValue;
 
+	@Column(name = "DATE_EXPIRATION", nullable = false)
+	private Date expirationDate;
+
+	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JoinColumn(name = "ID_STOCK_PRODUCT", referencedColumnName = "ID_STOCK_PRODUCT")
+	private StockProduct stockProduct;
+
 	@Version
 	@Column(name = "VERSION_PRODUCT", nullable = false)
 	private Integer version;
 
-	@Column(name = "DATE_EXPIRATION", nullable = false)
-	private Date expirationDate;
+	@Transient
+	private Integer quantityProductInPurchase;
 
-	@OneToMany(targetEntity=com.dellas.app.model.StockProduct.class, cascade={CascadeType.ALL}, fetch = FetchType.LAZY, mappedBy="product")
-	private Set<StockProduct> stockProducts;
+	public StockProduct getStockProduct() {
+		return stockProduct;
+	}
+
+	public void setStockProduct(final StockProduct stockProduct) {
+		this.stockProduct = stockProduct;
+	}
+
+	public Integer getQuantityProductInPurchase() {
+		return quantityProductInPurchase;
+	}
+
+	public void setQuantityProductInPurchase(final Integer quantityProductInPurchase) {
+		this.quantityProductInPurchase = quantityProductInPurchase;
+	}
 
 	public Integer getVersion() {
 		return version;
@@ -83,14 +104,6 @@ public class Product implements Serializable {
 
 	public void setExpirationDate(final Date expirationDate) {
 		this.expirationDate = expirationDate;
-	}
-
-	public Set<StockProduct> getStockProducts() {
-		return stockProducts;
-	}
-
-	public void setStockProducts(final Set<StockProduct> stockProducts) {
-		this.stockProducts = stockProducts;
 	}
 
 	@Override

@@ -9,10 +9,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.dellas.app.converter.PurchaseConverter;
+import com.dellas.app.converter.PurchaseProductAmountConverter;
 import com.dellas.app.dto.PurchaseDTO;
 import com.dellas.app.model.Product;
 import com.dellas.app.model.Purchase;
 import com.dellas.app.repository.ProductRepository;
+import com.dellas.app.repository.PurchaseProductAmountRepository;
 import com.dellas.app.repository.PurchaseRepository;
 
 @Transactional(readOnly = true)
@@ -24,6 +26,9 @@ public class PurchaseServiceImpl implements PurchaseService {
 
 	@Autowired
 	private ProductRepository productRepository;
+
+	@Autowired
+	private PurchaseProductAmountRepository purchaseProductAmountRepository;
 
 	// implementar regras de negocio
 
@@ -45,9 +50,23 @@ public class PurchaseServiceImpl implements PurchaseService {
 	@Transactional(readOnly = false)
 	@Override
 	public PurchaseDTO update(final PurchaseDTO purchaseDTO) {
-		final Purchase purchaseConverted= PurchaseConverter.toModel(purchaseDTO);
+		final Purchase purchaseConverted = PurchaseConverter.toModel(purchaseDTO);
 		purchaseConverted.setTotalValue(calculetedTotalValueWithDiscount(purchaseConverted));
-		return PurchaseConverter.toDTO(purchaseRepository.save(purchaseConverted));
+		final Purchase purchaseInserted = purchaseRepository.save(purchaseConverted);
+		purchaseProductAmountRepository.save(
+				PurchaseProductAmountConverter.toListModel(purchaseInserted.getId(), purchaseInserted.getProducts()));
+		return PurchaseConverter.toDTO(purchaseConverted);
+	}
+
+	@Transactional(readOnly = false)
+	@Override
+	public PurchaseDTO persist(final PurchaseDTO purchaseDTO) {
+		final Purchase purchaseConverted = PurchaseConverter.toModel(purchaseDTO);
+		purchaseConverted.setTotalValue(calculetedTotalValueWithDiscount(purchaseConverted));
+		final Purchase purchaseInserted = purchaseRepository.save(purchaseConverted);
+		purchaseProductAmountRepository.save(
+				PurchaseProductAmountConverter.toListModel(purchaseInserted.getId(), purchaseInserted.getProducts()));
+		return PurchaseConverter.toDTO(purchaseConverted);
 	}
 
 	@Transactional(readOnly = false)
@@ -56,25 +75,18 @@ public class PurchaseServiceImpl implements PurchaseService {
 		purchaseRepository.delete(id);
 	}
 
-	@Transactional(readOnly = false)
-	@Override
-	public PurchaseDTO persist(final PurchaseDTO purchaseDTO) {
-		final Purchase purchaseConverted= PurchaseConverter.toModel(purchaseDTO);
-		purchaseConverted.setTotalValue(calculetedTotalValueWithDiscount(purchaseConverted));
-		return PurchaseConverter.toDTO(purchaseRepository.save(purchaseConverted));
-	}
-
 	public Double calculetedTotalValueWithDiscount(final Purchase purchase) {
 		Double totalValue = 0.0;
-		final List<Product> listProduct=(List<Product>) productRepository.findAll(getListIdsProducts(purchase.getProducts()));
+		final List<Product> listProduct = (List<Product>) productRepository
+				.findAll(getListIdsProducts(purchase.getProducts()));
 		for (final Product product : listProduct) {
-			totalValue = totalValue + product.getUnitaryValue();
+			totalValue = totalValue + (product.getUnitaryValue() * product.getQuantityProductInPurchase());
 		}
 		return totalValue - purchase.getDiscount();
 	}
 
-	public List<Long> getListIdsProducts(final Set<Product> products){
-		final List<Long> results= new ArrayList<>();
+	public List<Long> getListIdsProducts(final Set<Product> products) {
+		final List<Long> results = new ArrayList<>();
 		for (final Product product : products) {
 			results.add(product.getId());
 		}

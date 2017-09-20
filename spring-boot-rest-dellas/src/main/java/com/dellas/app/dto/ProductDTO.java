@@ -14,6 +14,24 @@ public class ProductDTO extends AbstractDTO {
 	@JsonSerialize(using = CustomDateSerializer.class)
 	@JsonDeserialize(using = CustomDateDeserializer.class)
 	private Date expirationDate;
+	private Integer quantityProductInPurchase;
+	private StockProductDTO stockProductDTO;
+
+	public StockProductDTO getStockProductDTO() {
+		return stockProductDTO;
+	}
+
+	public void setStockProductDTO(final StockProductDTO stockProductDTO) {
+		this.stockProductDTO = stockProductDTO;
+	}
+
+	public Integer getQuantityProductInPurchase() {
+		return quantityProductInPurchase;
+	}
+
+	public void setQuantityProductInPurchase(final Integer quantityProductInPurchase) {
+		this.quantityProductInPurchase = quantityProductInPurchase;
+	}
 
 	public Date getExpirationDate() {
 		return expirationDate;

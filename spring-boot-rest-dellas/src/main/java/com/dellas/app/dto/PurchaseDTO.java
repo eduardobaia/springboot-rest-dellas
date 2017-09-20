@@ -16,7 +16,7 @@ public class PurchaseDTO extends AbstractDTO {
 	private Double discount;
 	private Double totalValue;
 	private UserDTO user;
-	private List<ProductDTO> products;
+	private List<ProductDTO> productDTOs;
 
 	public Date getDatePurchase() {
 		return datePurchase;
@@ -50,11 +50,11 @@ public class PurchaseDTO extends AbstractDTO {
 		this.user = user;
 	}
 
-	public List<ProductDTO> getProducts() {
-		return products;
+	public List<ProductDTO> getProductDTOs() {
+		return productDTOs;
 	}
 
-	public void setProducts(final List<ProductDTO> products) {
-		this.products = products;
+	public void setProductDTOs(final List<ProductDTO> productDTOs) {
+		this.productDTOs = productDTOs;
 	}
 }

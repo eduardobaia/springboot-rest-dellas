@@ -5,7 +5,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 
-public class MultipleStockProductException extends RuntimeException{
+public class MultipleProductException extends RuntimeException{
 
 	/**
 	 * Serial
@@ -15,14 +15,14 @@ public class MultipleStockProductException extends RuntimeException{
 	/**
 	 * Lista de excecoes
 	 */
-	private final Set<StockProductException> exceptions = new HashSet<StockProductException>();
+	private final Set<ProductException> exceptions = new HashSet<ProductException>();
 
 	/**
 	 * Constroi uma instancia desta classe.
 	 *
 	 * @param message mensagem de erro
 	 */
-	public MultipleStockProductException(final StockProductException message) {
+	public MultipleProductException(final ProductException message) {
 		exceptions.add(message);
 	}
 
@@ -31,11 +31,11 @@ public class MultipleStockProductException extends RuntimeException{
 	 *
 	 * @param messageList mensagem de erro
 	 */
-	public MultipleStockProductException(final Collection<? extends StockProductException> messageList) {
+	public MultipleProductException(final Collection<? extends ProductException> messageList) {
 		exceptions.addAll(messageList);
 	}
 
-	public MultipleStockProductException() {
+	public MultipleProductException() {
 		//Construtor padrao
 	}
 
@@ -45,7 +45,7 @@ public class MultipleStockProductException extends RuntimeException{
 	 *
 	 * @param message a mensagem de detalhe
 	 */
-	public void addException(final StockProductException message) {
+	public void addException(final ProductException message) {
 		exceptions.add(message);
 	}
 
@@ -54,15 +54,15 @@ public class MultipleStockProductException extends RuntimeException{
 	 *
 	 * @param messageList a mensagem de detalhe
 	 */
-	public void addExceptionList(final Collection<? extends StockProductException> messageList) {
+	public void addExceptionList(final Collection<? extends ProductException> messageList) {
 		exceptions.addAll(messageList);
 	}
 
-	public Set<StockProductException> getExceptions() {
+	public Set<ProductException> getExceptions() {
 		return exceptions;
 	}
 
-	public boolean contains(final StockProductException ex) {
+	public boolean contains(final ProductException ex) {
 		return (null != exceptions && !exceptions.isEmpty()) && exceptions.contains(ex);
 	}
 }

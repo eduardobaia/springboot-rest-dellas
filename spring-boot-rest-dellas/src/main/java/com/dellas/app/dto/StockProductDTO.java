@@ -2,7 +2,6 @@ package com.dellas.app.dto;
 
 public class StockProductDTO extends AbstractDTO {
 
-	private ProductDTO productDTO;
 	private Integer amount;
 	private String statusIndicator;
 
@@ -12,14 +11,6 @@ public class StockProductDTO extends AbstractDTO {
 
 	public void setStatusIndicator(final String statusIndicator) {
 		this.statusIndicator = statusIndicator;
-	}
-
-	public ProductDTO getProductDTO() {
-		return productDTO;
-	}
-
-	public void setProductDTO(final ProductDTO productDTO) {
-		this.productDTO = productDTO;
 	}
 
 	public Integer getAmount() {
